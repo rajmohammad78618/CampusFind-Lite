@@ -1,0 +1,12 @@
+{
+  "name": "campusfind-lite",
+  "version": "1.0.0",
+  "description": "CampusFind Lite - Campus Lost & Found Portal",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "keywords": ["lost", "found", "campus", "node", "mini-project"],
+  "author": "Student",
+  "license": "MIT"
+}

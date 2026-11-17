@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusFind Lite - Lost & Found</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#top" class="logo">
+        <span class="logo-icon">🔍</span> CampusFind <span class="logo-accent">Lite</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#browse">Browse Items</a>
+        <a href="#report-lost" class="nav-link-lost" data-open-form="lost">Report Lost</a>
+        <a href="#report-found" class="nav-link-found" data-open-form="found">Report Found</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <h1 class="hero-title">CampusFind Lite</h1>
+      <p class="hero-tagline">"Lost Something? Find It Here."</p>
+      <p class="hero-text">A simple lost &amp; found portal for students. Post what you lost or found, and browse everything reported on campus.</p>
+
+      <!-- Search Bar -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search items by name...">
+        <button type="button" id="searchBtn" class="btn btn-primary">Search</button>
+      </div>
+
+      <!-- Main Action Buttons -->
+      <div class="hero-buttons">
+        <button type="button" class="btn btn-lost" data-open-form="lost">Report Lost Item</button>
+        <button type="button" class="btn btn-found" data-open-form="found">Report Found Item</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats-section">
+    <div class="stat-card">
+      <span class="stat-number" id="totalCount">0</span>
+      <span class="stat-label">Total Items</span>
+    </div>
+    <div class="stat-card stat-lost">
+      <span class="stat-number" id="lostCount">0</span>
+      <span class="stat-label">Lost Items</span>
+    </div>
+    <div class="stat-card stat-found">
+      <span class="stat-number" id="foundCount">0</span>
+      <span class="stat-label">Found Items</span>
+    </div>
+  </section>
+
+  <!-- Browse Items -->
+  <section class="browse-section" id="browse">
+    <div class="section-header">
+      <h2>Browse Items</h2>
+      <p>Filter by type or category to find what you are looking for.</p>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="typeFilter">Type</label>
+        <select id="typeFilter">
+          <option value="all">All Items</option>
+          <option value="lost">Lost Only</option>
+          <option value="found">Found Only</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="categoryFilter">Category</label>
+        <select id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Wallet &amp; Bags">Wallet &amp; Bags</option>
+          <option value="Keys">Keys</option>
+          <option value="Books &amp; Stationery">Books &amp; Stationery</option>
+          <option value="Clothing">Clothing</option>
+          <option value="ID Cards">ID Cards</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <button type="button" id="clearFiltersBtn" class="btn btn-outline">Clear Filters</button>
+    </div>
+
+    <div id="itemsGrid" class="items-grid">
+      <p class="empty-message">Loading items...</p>
+    </div>
+  </section>
+
+  <!-- Report Form (Modal) -->
+  <div class="modal-overlay" id="formModal">
+    <div class="modal">
+      <button type="button" class="modal-close" id="closeFormBtn" aria-label="Close">&times;</button>
+      <h2 id="formTitle">Report an Item</h2>
+      <p class="modal-subtitle" id="formSubtitle">Fill in the details below.</p>
+
+      <form id="itemForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="itemType">Report Type *</label>
+            <select id="itemType" required>
+              <option value="lost">Lost Item</option>
+              <option value="found">Found Item</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="itemCategory">Category *</label>
+            <select id="itemCategory" required>
+              <option value="">Select category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Wallet &amp; Bags">Wallet &amp; Bags</option>
+              <option value="Keys">Keys</option>
+              <option value="Books &amp; Stationery">Books &amp; Stationery</option>
+              <option value="Clothing">Clothing</option>
+              <option value="ID Cards">ID Cards</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="itemName">Item Name *</label>
+          <input type="text" id="itemName" placeholder="e.g. Black Leather Wallet" maxlength="80" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="itemLocation">Location *</label>
+            <input type="text" id="itemLocation" placeholder="e.g. Library, 2nd floor" maxlength="100" required>
+          </div>
+          <div class="form-group">
+            <label for="itemDate">Date *</label>
+            <input type="date" id="itemDate" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="itemDescription">Description *</label>
+          <textarea id="itemDescription" rows="4" placeholder="Describe the item (color, brand, marks, etc.)" maxlength="500" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="itemImage">Item Image (optional, max 2 MB)</label>
+          <div class="file-upload">
+            <input type="file" id="itemImage" accept="image/jpeg,image/png,image/gif,image/webp">
+            <div class="image-preview" id="imagePreview">
+              <span>No image selected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" id="cancelFormBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Submit Report</button>
+        </div>
+        <p class="form-error" id="formError"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Item Details Modal -->
+  <div class="modal-overlay" id="detailsModal">
+    <div class="modal details-modal">
+      <button type="button" class="modal-close" id="closeDetailsBtn" aria-label="Close">&times;</button>
+      <div id="detailsContent"></div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-danger" id="deleteItemBtn">Delete Item</button>
+        <button type="button" class="btn btn-outline" id="closeDetailsBtn2">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Notification -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>CampusFind <span class="logo-accent">Lite</span></h3>
+        <p>Lost Something? Find It Here.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#browse">Browse Items</a>
+        <a href="#top">Back to Top</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 CampusFind Lite. Campus Lost &amp; Found Portal.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
